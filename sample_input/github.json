@@ -1,0 +1,29 @@
+{
+    "name": "Irla Ganga Siva Shankar",
+    "email": "238r1a6786@gmail.com",
+    "bio": "AI Engineer | Python Developer | ML Enthusiast",
+    "location": "Hyderabad",
+    "html_url": "https://github.com/shankar_irla",
+
+    "repositories": [
+
+        {
+            "name": "CandidateOne",
+            "language": "Python",
+            "topics": [
+                "Flask",
+                "Machine Learning",
+                "JSON"
+            ]
+        },
+
+        {
+            "name": "Portfolio",
+            "language": "JavaScript",
+            "topics": [
+                "HTML",
+                "CSS"
+            ]
+        }
+    ]
+}

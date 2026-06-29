@@ -1,2 +1,3 @@
-name,email,phone,current_company,title
-I G Siva Shankar,238r1a6786@gmail.com,9010376352,Google,SDE
+candidate_id,full_name,email,phone,headline,years_experience,skills,city,region,country,linkedin,github,portfolio
+1001,Shankar,238r1a6786@gmail.com,+919999999999,Software Engineer,5,"Python,SQL,Flask",Hyderabad,Telangana,India,https://linkedin.com/in/shankar,https://github.com/shankar,https://shankar.dev
+1002,I G Siva Shankar,shankar2@gmail.com,+918888888888,Data Scientist,3,"Python,Pandas,Machine Learning",Bengaluru,Karnataka,India,https://linkedin.com/in/shankar_irla,https://github.com/shankar_irla,

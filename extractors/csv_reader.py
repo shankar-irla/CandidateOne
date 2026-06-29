@@ -1,131 +1,194 @@
-import csv
-import os
+"""
+CSV Reader
+
+Reads recruiter CSV files and converts each row into the
+CandidateOne canonical schema.
+
+"""
+
+from __future__ import annotations
+
+from typing import Any, Dict, List
+
+import pandas as pd
+
+from extractors.base_reader import BaseReader
+from extractors.parser import Parser
+from models.canonical_schema import empty_candidate
+from utils.logger import get_logger
 
 
-class CSVReader:
+class CSVReader(BaseReader):
     """
-    Reads recruiter CSV files and converts them into
-    a standardized internal candidate format.
+    Reads recruiter CSV files.
+
+    Each row represents one candidate profile.
     """
 
-    REQUIRED_COLUMNS = [
-        "name",
-        "email",
-        "phone",
-        "current_company",
-        "title"
-    ]
+    SOURCE_NAME = "recruiter_csv"
 
-    def __init__(self):
-        self.source_name = "Recruiter CSV"
+    def __init__(self, file_path: str):
+        super().__init__(file_path)
+        self.logger = get_logger(__name__)
 
-    def extract(self, file_path):
+    # ---------------------------------------------------------
+    # Read
+    # ---------------------------------------------------------
+
+    def read(self) -> pd.DataFrame:
         """
-        Reads the recruiter CSV file.
-
-        Parameters
-        ----------
-        file_path : str
-
-        Returns
-        -------
-        list
-            List of standardized candidate dictionaries.
+        Reads recruiter CSV.
         """
+        return pd.read_csv(self.file_path).fillna("")
 
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"CSV file not found: {file_path}")
+    # ---------------------------------------------------------
+    # Parse
+    # ---------------------------------------------------------
+
+    def parse(
+        self,
+        dataframe: pd.DataFrame
+    ) -> List[Dict[str, Any]]:
+        """
+        Converts DataFrame rows into canonical candidates.
+        """
 
         candidates = []
 
-        with open(file_path, "r", encoding="utf-8-sig") as file:
+        for _, row in dataframe.iterrows():
 
-            reader = csv.DictReader(file)
+            record = row.to_dict()
 
-            if reader.fieldnames is None:
-                raise ValueError("CSV file is empty.")
+            candidate = empty_candidate()
 
-            missing_columns = [
-                column
-                for column in self.REQUIRED_COLUMNS
-                if column not in reader.fieldnames
-            ]
+            # ----------------------------------------------
+            # Basic Information
+            # ----------------------------------------------
 
-            if missing_columns:
-                raise ValueError(
-                    f"Missing required columns: {', '.join(missing_columns)}"
-                )
+            candidate["candidate_id"] = Parser.text(
+                Parser.get(record, "candidate_id")
+            )
 
-            for row in reader:
+            candidate["full_name"] = Parser.text(
+                Parser.get(record, "full_name")
+            )
 
-                candidate = {
-                    "candidate_id": None,
+            # ----------------------------------------------
+            # Contact
+            # ----------------------------------------------
 
-                    "full_name": self.clean(row.get("name")),
+            email = Parser.text(
+                Parser.get(record, "email")
+            )
 
-                    "emails": self.list_value(
-                        self.clean(row.get("email"))
-                    ),
+            if email:
+                candidate["emails"] = [email]
 
-                    "phones": self.list_value(
-                        self.clean(row.get("phone"))
-                    ),
+            phone = Parser.text(
+                Parser.get(record, "phone")
+            )
 
-                    "current_company": self.clean(
-                        row.get("current_company")
-                    ),
+            if phone:
+                candidate["phones"] = [phone]
 
-                    "title": self.clean(
-                        row.get("title")
-                    ),
+            # ----------------------------------------------
+            # Headline
+            # ----------------------------------------------
 
-                    "location": None,
+            candidate["headline"] = Parser.text(
+                Parser.get(record, "headline")
+            )
 
-                    "headline": None,
+            # ----------------------------------------------
+            # Experience
+            # ----------------------------------------------
 
-                    "years_experience": None,
+            candidate["years_experience"] = Parser.years(
+                Parser.get(record, "years_experience")
+            )
 
-                    "skills": [],
+            # ----------------------------------------------
+            # Skills
+            # ----------------------------------------------
 
-                    "experience": [],
+            candidate["skills"] = Parser.split_skills(
+                Parser.get(record, "skills")
+            )
 
-                    "education": [],
+            # ----------------------------------------------
+            # Location
+            # ----------------------------------------------
 
-                    "links": {},
+            candidate["location"]["city"] = Parser.text(
+                Parser.get(record, "city")
+            )
 
-                    "provenance": {},
+            candidate["location"]["region"] = Parser.text(
+                Parser.get(record, "region")
+            )
 
-                    "source": self.source_name
-                }
+            candidate["location"]["country"] = Parser.text(
+                Parser.get(record, "country")
+            )
 
-                candidates.append(candidate)
+            # ----------------------------------------------
+            # Links
+            # ----------------------------------------------
+
+            candidate["links"]["linkedin"] = Parser.text(
+                Parser.get(record, "linkedin")
+            )
+
+            candidate["links"]["github"] = Parser.text(
+                Parser.get(record, "github")
+            )
+
+            candidate["links"]["portfolio"] = Parser.text(
+                Parser.get(record, "portfolio")
+            )
+
+            # ----------------------------------------------
+            # Optional Experience & Education
+            # ----------------------------------------------
+
+            candidate["experience"] = Parser.list(
+                Parser.get(record, "experience")
+            )
+
+            candidate["education"] = Parser.list(
+                Parser.get(record, "education")
+            )
+
+            # ----------------------------------------------
+            # Provenance
+            # ----------------------------------------------
+
+            candidate["provenance"] = {
+                "candidate_id": [self.SOURCE_NAME],
+                "full_name": [self.SOURCE_NAME],
+                "emails": [self.SOURCE_NAME],
+                "phones": [self.SOURCE_NAME],
+                "headline": [self.SOURCE_NAME],
+                "years_experience": [self.SOURCE_NAME],
+                "skills": [self.SOURCE_NAME],
+                "location": [self.SOURCE_NAME],
+                "links": [self.SOURCE_NAME],
+                "experience": [self.SOURCE_NAME],
+                "education": [self.SOURCE_NAME]
+            }
+
+            # ----------------------------------------------
+            # Initial Confidence
+            # ----------------------------------------------
+
+            candidate["overall_confidence"] = 0.80
+
+            candidates.append(candidate)
+
+        self.logger.info(
+            "Successfully parsed %d candidate(s) from %s",
+            len(candidates),
+            self.file_path.name
+        )
 
         return candidates
-
-    @staticmethod
-    def clean(value):
-        """
-        Removes unnecessary spaces.
-        Converts empty strings into None.
-        """
-
-        if value is None:
-            return None
-
-        value = value.strip()
-
-        if value == "":
-            return None
-
-        return value
-
-    @staticmethod
-    def list_value(value):
-        """
-        Converts a single value into a list.
-        """
-
-        if value is None:
-            return []
-
-        return [value]

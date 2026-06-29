@@ -1,112 +1,201 @@
+"""
+ATS Reader
+
+Reads Applicant Tracking System (ATS) JSON files and converts
+them into the CandidateOne canonical candidate schema.
+
+"""
+
+from __future__ import annotations
+
+from typing import Any, Dict
 import json
-import os
+
+from extractors.base_reader import BaseReader
+from extractors.parser import Parser
+from models.canonical_schema import empty_candidate
+from utils.logger import get_logger
 
 
-class ATSReader:
+class ATSReader(BaseReader):
     """
-    Reads ATS JSON data and converts it into the
-    standardized CandidateOne candidate format.
+    Reads ATS JSON exports.
+
+    Expected Input:
+    {
+        "candidate_id": "...",
+        "full_name": "...",
+        "email": "...",
+        ...
+    }
     """
 
-    def __init__(self):
-        self.source_name = "ATS JSON"
+    def __init__(self, file_path: str):
 
-    def extract(self, file_path):
+        super().__init__(file_path)
+
+        self.logger = get_logger(__name__)
+
+    # ---------------------------------------------------------
+    # Read JSON
+    # ---------------------------------------------------------
+
+    def read(self) -> Dict[str, Any]:
         """
-        Reads ATS JSON file.
-
-        Parameters
-        ----------
-        file_path : str
-
-        Returns
-        -------
-        list
-            List of normalized candidate dictionaries.
+        Reads the ATS JSON file.
         """
 
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"ATS file not found: {file_path}")
+        with open(
+            self.file_path,
+            "r",
+            encoding="utf-8"
+        ) as file:
 
-        with open(file_path, "r", encoding="utf-8") as file:
-            data = json.load(file)
+            return json.load(file)
 
-        if isinstance(data, dict):
-            data = [data]
+    # ---------------------------------------------------------
+    # Parse
+    # ---------------------------------------------------------
 
-        candidates = []
+    def parse(
+        self,
+        data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Converts ATS JSON into canonical schema.
+        """
 
-        for record in data:
+        candidate = empty_candidate()
 
-            candidate = {
-                "candidate_id": self.clean(
-                    record.get("candidateId")
-                ),
+        # -----------------------------------------------------
+        # Basic Information
+        # -----------------------------------------------------
 
-                "full_name": self.clean(
-                    record.get("candidateName")
-                ),
+        candidate["candidate_id"] = Parser.text(
+            Parser.get(data, "candidate_id")
+        )
 
-                "emails": self.list_value(
-                    self.clean(record.get("emailAddress"))
-                ),
+        candidate["full_name"] = Parser.text(
+            Parser.get(data, "full_name")
+        )
 
-                "phones": self.list_value(
-                    self.clean(record.get("mobile"))
-                ),
+        # -----------------------------------------------------
+        # Contact
+        # -----------------------------------------------------
 
-                "current_company": self.clean(
-                    record.get("organization")
-                ),
+        email = Parser.text(
+            Parser.get(data, "email")
+        )
 
-                "title": self.clean(
-                    record.get("designation")
-                ),
+        if email:
+            candidate["emails"] = [email]
 
-                "location": self.clean(
-                    record.get("location")
-                ),
+        phone = Parser.text(
+            Parser.get(data, "phone")
+        )
 
-                "headline": self.clean(
-                    record.get("headline")
-                ),
+        if phone:
+            candidate["phones"] = [phone]
 
-                "years_experience": record.get("experience"),
+        # -----------------------------------------------------
+        # Headline
+        # -----------------------------------------------------
 
-                "skills": record.get("skills", []),
+        candidate["headline"] = Parser.text(
+            Parser.get(data, "headline")
+        )
 
-                "experience": record.get("workHistory", []),
+        # -----------------------------------------------------
+        # Experience
+        # -----------------------------------------------------
 
-                "education": record.get("education", []),
+        candidate["years_experience"] = Parser.years(
+            Parser.get(data, "years_experience")
+        )
 
-                "links": {},
+        # -----------------------------------------------------
+        # Skills
+        # -----------------------------------------------------
 
-                "provenance": {},
+        candidate["skills"] = Parser.split_skills(
+            Parser.get(data, "skills")
+        )
 
-                "source": self.source_name
-            }
+        # -----------------------------------------------------
+        # Location
+        # -----------------------------------------------------
 
-            candidates.append(candidate)
+        candidate["location"]["city"] = Parser.text(
+            Parser.get(data, "city")
+        )
 
-        return candidates
+        candidate["location"]["region"] = Parser.text(
+            Parser.get(data, "region")
+        )
 
-    @staticmethod
-    def clean(value):
+        candidate["location"]["country"] = Parser.text(
+            Parser.get(data, "country")
+        )
 
-        if value is None:
-            return None
+        # -----------------------------------------------------
+        # Links
+        # -----------------------------------------------------
 
-        value = str(value).strip()
+        candidate["links"]["linkedin"] = Parser.text(
+            Parser.get(data, "linkedin")
+        )
 
-        if value == "":
-            return None
+        candidate["links"]["github"] = Parser.text(
+            Parser.get(data, "github")
+        )
 
-        return value
+        candidate["links"]["portfolio"] = Parser.text(
+            Parser.get(data, "portfolio")
+        )
 
-    @staticmethod
-    def list_value(value):
+        # -----------------------------------------------------
+        # Experience Records
+        # -----------------------------------------------------
 
-        if value is None:
-            return []
+        candidate["experience"] = Parser.list(
+            Parser.get(data, "experience")
+        )
 
-        return [value]
+        # -----------------------------------------------------
+        # Education Records
+        # -----------------------------------------------------
+
+        candidate["education"] = Parser.list(
+            Parser.get(data, "education")
+        )
+
+        # -----------------------------------------------------
+        # Provenance
+        # -----------------------------------------------------
+
+        candidate["provenance"] = {
+            "candidate_id": ["ats"],
+            "full_name": ["ats"],
+            "emails": ["ats"],
+            "phones": ["ats"],
+            "headline": ["ats"],
+            "years_experience": ["ats"],
+            "skills": ["ats"],
+            "location": ["ats"],
+            "links": ["ats"],
+            "experience": ["ats"],
+            "education": ["ats"]
+        }
+
+        # -----------------------------------------------------
+        # Initial Confidence
+        # -----------------------------------------------------
+
+        candidate["overall_confidence"] = 0.90
+
+        self.logger.info(
+            "Successfully parsed ATS candidate '%s'",
+            candidate["full_name"]
+        )
+
+        return candidate

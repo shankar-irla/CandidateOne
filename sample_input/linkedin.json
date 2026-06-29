@@ -1,0 +1,37 @@
+{
+  "full_name": "Irla Ganga Siva Shankar",
+  "email": "238r1a6786@gmail.com",
+  "phone": "+91 9999999999",
+  "headline": "AI Engineer | Python Developer",
+  "city": "Hyderabad",
+  "region": "Telangana",
+  "country": "India",
+  "profile_url": "https://linkedin.com/in/shankar_irla",
+  "github": "https://github.com/shankar_irla",
+  "portfolio": "https://shankar.dev",
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "Flask",
+    "SQL"
+  ],
+  "experience": [
+    {
+      "company": "ABC Technologies",
+      "role": "Software Engineer",
+      "start_date": "2023-01",
+      "end_date": "Present"
+    }
+  ],
+  "education": [
+    {
+      "degree": "B.Tech",
+      "institution": "CMR Engineering College",
+      "year": "2027"
+    }
+  ],
+  "certifications": [
+    "AWS Cloud Practitioner",
+    "Google Data Analytics"
+  ]
+}

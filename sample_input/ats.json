@@ -1,18 +1,34 @@
-[
-  {
-    "candidateId": "ATS001",
-    "candidateName": "I G Siva Shankar",
-    "emailAddress": "238r1a6786@gmail.com",
-    "mobile": "9010376352",
-    "organization": "Google",
-    "designation": "Software Engineer",
-    "location": "Hyderabad",
-    "headline": "Backend Developer",
-    "experience": 4,
+{
+    "candidate_id": "1001",
+    "full_name": "I G Siva Shankar",
+    "email": "238r1a6786@gmail.com",
+    "phone": "+91 99999 99999",
+    "headline": "AI Engineer",
+    "years_experience": "4 years",
     "skills": [
-      "Python",
-      "SQL",
-      "AWS"
+        "Python",
+        "Machine Learning",
+        "SQL"
+    ],
+    "city": "Hyderabad",
+    "region": "Telangana",
+    "country": "India",
+    "linkedin": "https://linkedin.com/in/shankar_irla",
+    "github": "https://github.com/shankar_irla",
+    "portfolio": "https://shankar.dev",
+    "experience": [
+        {
+            "company": "ABC Technologies",
+            "role": "Software Engineer",
+            "start_date": "2021-06",
+            "end_date": "Present"
+        }
+    ],
+    "education": [
+        {
+            "degree": "B.Tech",
+            "institution": "CMR Engineering College",
+            "year": "2027"
+        }
     ]
-  }
-]
+}
