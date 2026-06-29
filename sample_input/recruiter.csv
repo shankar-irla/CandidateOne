@@ -1,3 +1,3 @@
-candidate_id,full_name,email,phone,headline,years_experience,skills,city,region,country,linkedin,github,portfolio
-1001,Shankar,238r1a6786@gmail.com,+919999999999,Software Engineer,5,"Python,SQL,Flask",Hyderabad,Telangana,India,https://linkedin.com/in/shankar,https://github.com/shankar,https://shankar.dev
-1002,I G Siva Shankar,shankar2@gmail.com,+918888888888,Data Scientist,3,"Python,Pandas,Machine Learning",Bengaluru,Karnataka,India,https://linkedin.com/in/shankar_irla,https://github.com/shankar_irla,
+candidate_id,full_name,email,phone,headline,years_experience,skills,city,region,country,linkedin,github,portfolio,current_company,title
+1001,"Irla Ganga Siva Shankar","238r1a6786@gmail.com","+919010376352","AI Engineer | Python Developer",2,"Python,Machine Learning,Flask,SQL,React,Next.js,Docker","Hyderabad","Telangana","India","https://linkedin.com/in/shankar_irla","https://github.com/shankar_irla","https://shankar.dev","IIIT Hyderabad","AIML Intern"
+1002,"I G Siva Shankar","238r1a6786@gmail.com","+919010376352","Software Engineer",2,"Python,SQL,REST APIs,Git","Hyderabad","Telangana","India","https://linkedin.com/in/shankar_irla","https://github.com/shankar_irla","https://shankar.dev","ABC Technologies","Software Engineer"

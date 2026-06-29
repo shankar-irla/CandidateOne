@@ -1,0 +1,255 @@
+{
+    "candidate_id": "1001",
+    "candidate_name": "Irla Ganga Siva Shankar",
+    "email": "238r1a6786@gmail.com",
+    "phone": [
+        "+919010376352",
+        "+919999999999"
+    ],
+    "designation": "Aiml Intern | International Institute Of Information Technology - Hyderabad (Iiit -H) May 202 5 – Aug 2025",
+    "experience_years": 9.0,
+    "skill_set": [
+        "Irla Ganga Siva Shankar 📧 238R1A6786@Gmail.Com",
+        "📱 +91 9010376352",
+        "🌐 Portfolio",
+        "</> Leetcode",
+        "Github",
+        "Linkedin",
+        "Python",
+        "Machine Learning",
+        "SQL",
+        "Flask",
+        "Json",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "React",
+        "Next.Js",
+        "Docker",
+        "Rest Apis",
+        "Git"
+    ],
+    "location": {
+        "city": "Hyderabad",
+        "region": "Telangana",
+        "country": "IN"
+    },
+    "work_experience": [
+        {
+            "company": null,
+            "role": "AIML Intern | International Institute of Information Technology - Hyderabad (IIIT -H) May 202 5 – Aug 2025",
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "company": null,
+            "role": "- Architected a YOLOv8 -based helmet detection system, achieving 92% validation accuracy on a custom dataset for real -time safety",
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "company": null,
+            "role": "monitoring.",
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "company": null,
+            "role": "- Curated and processed 1,000+ annotated images, improving model precision and reducing fa lse positives through iterative",
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "company": null,
+            "role": "optimization.",
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "company": null,
+            "role": "- Automated end -to-end ML workflows including preprocessing, augmentation, training, evaluation, and hyperparameter tuning,",
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "company": null,
+            "role": "reducing manual effort by 40%.",
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "company": null,
+            "role": "- Developed reproducible Python -based pipelines in Linux en vironments, accelerating experimentation cycles by 30% and supporting",
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "company": null,
+            "role": "agile research collaboration.",
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "company": "ABC Technologies",
+            "role": "Software Engineer",
+            "start_date": "2021-06",
+            "end_date": null
+        },
+        {
+            "company": "ABC Technologies",
+            "role": "Software Engineer",
+            "start_date": "2023-01",
+            "end_date": null
+        }
+    ],
+    "education": [
+        {
+            "institution": "CMR Engineering College, Hyderabad Sep 2023 – May 2027",
+            "degree": null,
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "institution": "B.Tech in Computer Science & Engineering (Data Science) CGPA – 9.04 / 10.0",
+            "degree": null,
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "institution": "- President, Coding Club – Led coding competitions, workshops, and technical initiatives.",
+            "degree": null,
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "institution": "- Executive Lead, CREST Club – Organized national -level technical events, seminars, and hackathons",
+            "degree": null,
+            "start_date": null,
+            "end_date": null
+        },
+        {
+            "degree": "B.Tech",
+            "institution": "CMR Engineering College",
+            "year": "2027",
+            "start_date": null,
+            "end_date": null
+        }
+    ],
+    "social_links": {
+        "linkedin": "https://linkedin.com/in/shankar_irla",
+        "github": "https://github.com/shankar_irla",
+        "portfolio": "https://shankar.dev",
+        "other": []
+    },
+    "confidence": 1.0,
+    "provenance": {
+        "full_name": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "linkedin",
+            "github",
+            "recruiter_csv"
+        ],
+        "emails": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "linkedin",
+            "github",
+            "recruiter_csv"
+        ],
+        "phones": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "linkedin",
+            "recruiter_csv"
+        ],
+        "location": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "linkedin",
+            "github",
+            "recruiter_csv"
+        ],
+        "links": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "linkedin",
+            "github",
+            "recruiter_csv"
+        ],
+        "headline": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "linkedin",
+            "github",
+            "recruiter_csv"
+        ],
+        "years_experience": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "recruiter_csv"
+        ],
+        "skills": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "linkedin",
+            "github",
+            "recruiter_csv"
+        ],
+        "experience": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "linkedin",
+            "recruiter_csv"
+        ],
+        "education": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            },
+            "ats",
+            "linkedin",
+            "recruiter_csv"
+        ],
+        "overall_confidence": [
+            {
+                "source": "resume",
+                "method": "resume_pdf"
+            }
+        ],
+        "candidate_id": [
+            "ats",
+            "recruiter_csv"
+        ]
+    },
+    "country": "India",
+    "currency": "INR",
+    "status": "Active"
+}

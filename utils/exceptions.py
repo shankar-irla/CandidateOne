@@ -236,3 +236,10 @@ class FileMissingError(CandidateOneError):
         self.file_path = file_path
 
         super().__init__(message)
+
+        # ==========================================================
+# Backward Compatibility Aliases
+# ==========================================================
+
+# Older modules may import these names.
+SchemaValidationError = ValidationError
