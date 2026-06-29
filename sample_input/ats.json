@@ -1,0 +1,18 @@
+[
+  {
+    "candidateId": "ATS001",
+    "candidateName": "I G Siva Shankar",
+    "emailAddress": "238r1a6786@gmail.com",
+    "mobile": "9010376352",
+    "organization": "Google",
+    "designation": "Software Engineer",
+    "location": "Hyderabad",
+    "headline": "Backend Developer",
+    "experience": 4,
+    "skills": [
+      "Python",
+      "SQL",
+      "AWS"
+    ]
+  }
+]
