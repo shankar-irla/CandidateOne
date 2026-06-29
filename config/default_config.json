@@ -1,0 +1,66 @@
+{
+    "project": {
+        "name": "CandidateOne",
+        "version": "1.0.0",
+        "description": "Canonical Candidate Profile Generator"
+    },
+
+    "field_mapping": {
+
+        "candidate_id": "candidate_id",
+
+        "full_name": "candidate_name",
+
+        "emails": "email",
+
+        "phones": "phone",
+
+        "headline": "designation",
+
+        "years_experience": "experience_years",
+
+        "skills": "skill_set",
+
+        "location": "location",
+
+        "experience": "work_experience",
+
+        "education": "education",
+
+        "links": "social_links",
+
+        "overall_confidence": "confidence",
+
+        "provenance": "provenance"
+    },
+
+    "required_fields": [
+
+        "candidate_name",
+
+        "email",
+
+        "skill_set"
+
+    ],
+
+    "defaults": {
+
+        "country": "India",
+
+        "currency": "INR",
+
+        "status": "Active"
+
+    },
+
+    "output": {
+
+        "pretty_print": true,
+
+        "indent": 4,
+
+        "sort_keys": false
+
+    }
+}

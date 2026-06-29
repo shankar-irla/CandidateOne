@@ -1,0 +1,66 @@
+{
+    "project": {
+        "name": "CandidateOne",
+        "version": "1.0.0",
+        "client": "Eightfold AI Assignment"
+    },
+
+    "field_mapping": {
+
+        "candidate_id": "id",
+
+        "full_name": "fullName",
+
+        "emails": "primaryEmail",
+
+        "phones": "primaryPhone",
+
+        "headline": "currentTitle",
+
+        "years_experience": "experience",
+
+        "skills": "skills",
+
+        "location": "currentLocation",
+
+        "experience": "employmentHistory",
+
+        "education": "academicHistory",
+
+        "links": "profiles",
+
+        "overall_confidence": "confidenceScore",
+
+        "provenance": "fieldProvenance"
+    },
+
+    "required_fields": [
+
+        "fullName",
+
+        "primaryEmail",
+
+        "skills"
+
+    ],
+
+    "defaults": {
+
+        "country": "India",
+
+        "source": "CandidateOne ETL",
+
+        "status": "Processed"
+
+    },
+
+    "output": {
+
+        "pretty_print": true,
+
+        "indent": 2,
+
+        "sort_keys": false
+
+    }
+}
