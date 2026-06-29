@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CandidateOne | Candidate Canonicalization Engine</title>
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <!-- Custom CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- ========================================================= -->
+<!-- Navigation -->
+<!-- ========================================================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold"
+           href="/">
+
+            <i class="bi bi-person-workspace"></i>
+
+            CandidateOne
+
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbar">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse"
+             id="navbar">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link active"
+                       href="/">
+
+                        Home
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="/about">
+
+                        About
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="/health">
+
+                        Health
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- ========================================================= -->
+<!-- Hero -->
+<!-- ========================================================= -->
+
+<section class="hero-section py-5">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-7">
+
+                <h1 class="display-4 fw-bold">
+
+                    CandidateOne
+
+                </h1>
+
+                <h4 class="text-primary mb-3">
+
+                    Canonical Candidate Profile Generator
+
+                </h4>
+
+                <p class="lead">
+
+                    Upload candidate information from multiple
+                    sources including Resume, ATS, GitHub,
+                    LinkedIn and Recruiter CSV.
+
+                    CandidateOne automatically extracts,
+                    normalizes, merges and projects the
+                    information into a unified canonical
+                    candidate profile.
+
+                </p>
+
+                <div class="mt-4">
+
+                    <span class="badge bg-primary me-2">
+
+                        ETL
+
+                    </span>
+
+                    <span class="badge bg-success me-2">
+
+                        Flask
+
+                    </span>
+
+                    <span class="badge bg-warning text-dark me-2">
+
+                        Python
+
+                    </span>
+
+                    <span class="badge bg-info text-dark">
+
+                        AI Assignment
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-5 text-center">
+
+                <img src="{{ url_for('static', filename='images/architecture.png') }}"
+                     class="img-fluid rounded shadow-lg"
+                     alt="Architecture">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========================================================= -->
+<!-- Flash Messages -->
+<!-- ========================================================= -->
+
+<div class="container">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+{% for category, message in messages %}
+
+<div class="alert alert-{{ category }} alert-dismissible fade show">
+
+    {{ message }}
+
+    <button class="btn-close"
+            data-bs-dismiss="alert"></button>
+
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+{% endwith %}
+
+</div>
+
+<!-- ========================================================= -->
+<!-- Upload Form -->
+<!-- ========================================================= -->
+
+<div class="container my-5">
+
+<div class="card shadow-lg border-0">
+
+<div class="card-header bg-primary text-white">
+
+<h3 class="mb-0">
+
+<i class="bi bi-cloud-upload"></i>
+
+Upload Candidate Sources
+
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<form
+
+action="/process"
+
+method="POST"
+
+enctype="multipart/form-data"
+
+id="uploadForm">
+
+<div class="row">
+
+<!-- Resume -->
+
+<div class="col-md-6 mb-4">
+
+    <label class="form-label fw-bold">
+
+        <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
+
+        Resume (PDF)
+
+    </label>
+
+    <input
+
+        type="file"
+
+        class="form-control"
+
+        name="resume"
+
+        accept=".pdf"
+
+        required>
+
+</div>
+
+
+<!-- ATS -->
+
+<div class="col-md-6 mb-4">
+
+    <label class="form-label fw-bold">
+
+        <i class="bi bi-database-fill text-primary"></i>
+
+        ATS Export (JSON)
+
+    </label>
+
+    <input
+
+        type="file"
+
+        class="form-control"
+
+        name="ats"
+
+        accept=".json">
+
+</div>
+
+
+<!-- LinkedIn -->
+
+<div class="col-md-6 mb-4">
+
+    <label class="form-label fw-bold">
+
+        <i class="bi bi-linkedin text-primary"></i>
+
+        LinkedIn Profile (JSON)
+
+    </label>
+
+    <input
+
+        type="file"
+
+        class="form-control"
+
+        name="linkedin"
+
+        accept=".json">
+
+</div>
+
+
+<!-- GitHub -->
+
+<div class="col-md-6 mb-4">
+
+    <label class="form-label fw-bold">
+
+        <i class="bi bi-github"></i>
+
+        GitHub Profile (JSON)
+
+    </label>
+
+    <input
+
+        type="file"
+
+        class="form-control"
+
+        name="github"
+
+        accept=".json">
+
+</div>
+
+
+<!-- Recruiter CSV -->
+
+<div class="col-md-12 mb-4">
+
+    <label class="form-label fw-bold">
+
+        <i class="bi bi-file-earmark-spreadsheet-fill text-success"></i>
+
+        Recruiter CSV
+
+    </label>
+
+    <input
+
+        type="file"
+
+        class="form-control"
+
+        name="csv"
+
+        accept=".csv">
+
+</div>
+
+</div>
+
+<hr class="my-4">
+
+<div class="text-center">
+
+    <button
+
+        type="submit"
+
+        class="btn btn-lg btn-primary px-5"
+
+        id="submitBtn">
+
+        <i class="bi bi-play-circle-fill"></i>
+
+        Run CandidateOne Pipeline
+
+    </button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- Loading Spinner -->
+<!-- ========================================================= -->
+
+<div
+
+id="loading"
+
+style="display:none;">
+
+<div class="loading-overlay">
+
+<div class="text-center">
+
+<div
+
+class="spinner-border text-light"
+
+style="width:4rem;height:4rem;">
+
+</div>
+
+<h3 class="text-white mt-4">
+
+Processing Candidate...
+
+</h3>
+
+<p class="text-white">
+
+Running Extraction →
+
+Normalization →
+
+Merge →
+
+Projection →
+
+Validation
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- Features -->
+<!-- ========================================================= -->
+
+<section class="container mb-5">
+
+<div class="row">
+
+<div class="col-md-4">
+
+<div class="card feature-card h-100 shadow">
+
+<div class="card-body text-center">
+
+<i class="bi bi-box-arrow-down display-4 text-primary"></i>
+
+<h4 class="mt-3">
+
+Extraction
+
+</h4>
+
+<p>
+
+Reads candidate information from Resume,
+ATS, LinkedIn, GitHub and Recruiter CSV.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card feature-card h-100 shadow">
+
+<div class="card-body text-center">
+
+<i class="bi bi-arrow-repeat display-4 text-success"></i>
+
+<h4 class="mt-3">
+
+Normalization
+
+</h4>
+
+<p>
+
+Standardizes emails, phones,
+locations, dates and skills into
+a canonical schema.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card feature-card h-100 shadow">
+
+<div class="card-body text-center">
+
+<i class="bi bi-diagram-3 display-4 text-warning"></i>
+
+<h4 class="mt-3">
+
+Merge Engine
+
+</h4>
+
+<p>
+
+Combines information from multiple
+sources with provenance tracking
+and confidence scoring.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<!-- ========================================================= -->
+<!-- Pipeline Flow -->
+<!-- ========================================================= -->
+
+<section class="container mb-5">
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-dark text-white">
+
+            <h4 class="mb-0">
+
+                <i class="bi bi-diagram-3"></i>
+
+                CandidateOne Pipeline Flow
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row text-center">
+
+                <div class="col">
+
+                    <h5>Resume</h5>
+
+                </div>
+
+                <div class="col">
+
+                    <h5>ATS</h5>
+
+                </div>
+
+                <div class="col">
+
+                    <h5>LinkedIn</h5>
+
+                </div>
+
+                <div class="col">
+
+                    <h5>GitHub</h5>
+
+                </div>
+
+                <div class="col">
+
+                    <h5>CSV</h5>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="text-center">
+
+                <h3>
+
+                    ↓
+
+                </h3>
+
+                <h5 class="text-primary">
+
+                    Extraction
+
+                </h5>
+
+                <h3>
+
+                    ↓
+
+                </h3>
+
+                <h5 class="text-success">
+
+                    Normalization
+
+                </h5>
+
+                <h3>
+
+                    ↓
+
+                </h3>
+
+                <h5 class="text-warning">
+
+                    Merge Engine
+
+                </h5>
+
+                <h3>
+
+                    ↓
+
+                </h3>
+
+                <h5 class="text-info">
+
+                    Projection
+
+                </h5>
+
+                <h3>
+
+                    ↓
+
+                </h3>
+
+                <h5 class="text-danger">
+
+                    Validation
+
+                </h5>
+
+                <h3>
+
+                    ↓
+
+                </h3>
+
+                <h4 class="fw-bold">
+
+                    Canonical Candidate Profile
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========================================================= -->
+<!-- Footer -->
+<!-- ========================================================= -->
+
+<footer class="bg-dark text-white py-4 mt-5">
+
+    <div class="container text-center">
+
+        <h5>
+
+            CandidateOne
+
+        </h5>
+
+        <p class="mb-2">
+
+            End-to-End Candidate Canonicalization Engine
+
+        </p>
+
+        <small>
+
+            Developed by
+
+            <strong>
+
+                Shankar Irla
+
+            </strong>
+
+            |
+
+            Flask • Python • ETL • JSON • AI
+
+        </small>
+
+    </div>
+
+</footer>
+
+<!-- ========================================================= -->
+<!-- Bootstrap -->
+<!-- ========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ========================================================= -->
+<!-- Custom JS -->
+<!-- ========================================================= -->
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+<script>
+
+document
+
+.getElementById(
+
+"uploadForm"
+
+)
+
+.addEventListener(
+
+"submit",
+
+function(){
+
+document
+
+.getElementById(
+
+"loading"
+
+)
+
+.style.display="block";
+
+}
+
+);
+
+</script>
+
+</body>
+
+</html>
