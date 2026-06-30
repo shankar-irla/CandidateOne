@@ -55,7 +55,7 @@ CandidateOne was developed as a solution inspired by the **Eightfold AI Candidat
 
 <p align="center">
 
-<img src="docs/HomePage.png" width="95%" alt="CandidateOne Home Page"/>
+<img src="docs/IntroductionBanner.png" width="95%" alt="CandidateOne Home Page"/>
 
 </p>
 
