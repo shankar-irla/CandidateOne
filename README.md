@@ -52,6 +52,13 @@ The project emphasizes:
 
 CandidateOne was developed as a solution inspired by the **Eightfold AI Candidate Canonicalization Engineering Challenge**, demonstrating practical software engineering, data engineering, and system design principles.
 
+
+<p align="center">
+
+<img src="docs/HomePage.png" width="95%" alt="CandidateOne Home Page"/>
+
+</p>
+
 ---
 
 # ⭐ Key Highlights
