@@ -970,14 +970,6 @@ CMR Engineering College, Hyderabad
 
 ---
 
-# 📄 License
-
-This project is licensed under the **MIT License**.
-
-See the `LICENSE` file for details.
-
----
-
 # Acknowledgements
 
 This project was developed as part of the **Eightfold AI Candidate Canonicalization Engineering Challenge** to demonstrate practical software engineering, data engineering, and ETL pipeline design principles.
