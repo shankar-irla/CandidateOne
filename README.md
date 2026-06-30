@@ -6,8 +6,7 @@
 
 <p>
 
-Transform fragmented candidate information from multiple sources into a single,
-validated, configurable, confidence-scored canonical profile.
+Transform fragmented candidate information from multiple sources into a unified, validated, configurable, and confidence-scored canonical candidate profile.
 
 </p>
 
@@ -21,13 +20,14 @@ validated, configurable, confidence-scored canonical profile.
 
 <img src="https://img.shields.io/badge/Flask-3.1-black?style=for-the-badge&logo=flask"/>
 
+<img src="https://img.shields.io/badge/Pandas-Data_Processing-success?style=for-the-badge"/>
+
 <img src="https://img.shields.io/badge/JSON-Schema-success?style=for-the-badge"/>
 
-<img src="https://img.shields.io/badge/Architecture-Modular-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Architecture-Modular_ETL-orange?style=for-the-badge"/>
 
 <img src="https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge"/>
 
-<img src="https://img.shields.io/badge/License-MIT-blueviolet?style=for-the-badge"/>
 
 </div>
 
@@ -35,76 +35,22 @@ validated, configurable, confidence-scored canonical profile.
 
 # 📌 Overview
 
-CandidateOne is an end-to-end **ETL pipeline** that consolidates candidate information collected from multiple structured and unstructured sources into a single canonical profile.
+CandidateOne is an end-to-end **Multi-Source Candidate Canonicalization Engine** that consolidates fragmented candidate information collected from resumes, ATS exports, LinkedIn profiles, GitHub profiles, and recruiter spreadsheets into a single, trusted canonical profile.
 
-Instead of treating resumes, ATS exports, LinkedIn profiles, GitHub profiles, and recruiter spreadsheets independently, CandidateOne intelligently extracts, normalizes, validates, merges, and projects the information into one trusted representation.
+Instead of treating every source independently, CandidateOne follows a deterministic **Extract → Normalize → Merge → Project → Validate** pipeline to produce one unified representation of a candidate.
 
-This project was designed as a solution to the **Eightfold AI Candidate Canonicalization Engineering Challenge**, focusing on software engineering principles, modular architecture, deterministic processing, explainability, and configurable output generation.
+The project emphasizes:
 
----
+- Modular software architecture
+- Deterministic ETL processing
+- Canonical data modeling
+- Provenance tracking
+- Confidence scoring
+- Configurable output projection
+- JSON schema validation
+- Explainable data transformations
 
-# 🎯 Problem Statement
-
-Modern hiring platforms receive candidate information from multiple systems.
-
-For a single candidate, different sources may contain:
-
-- Different names
-- Different phone numbers
-- Missing emails
-- Different skill spellings
-- Partial education
-- Duplicate experience
-- Conflicting information
-
-Without a canonical representation:
-
-- Duplicate candidates appear.
-- Recruiters waste time.
-- Downstream AI systems consume inconsistent data.
-- Analytics become unreliable.
-
-CandidateOne solves this problem through a deterministic ETL pipeline.
-
----
-
-# 💡 Solution
-
-CandidateOne processes candidate information through five major stages.
-
-```text
-Resume (PDF)
-ATS Export (JSON)
-LinkedIn (JSON)
-GitHub (JSON)
-Recruiter CSV
-        │
-        ▼
-Extraction Layer
-        │
-        ▼
-Normalization Layer
-        │
-        ▼
-Merge Engine
-        │
-        ▼
-Projection Layer
-        │
-        ▼
-Validation Layer
-        │
-        ▼
-Canonical Candidate Profile
-```
-
-Every field in the final output is:
-
-- Extracted
-- Normalized
-- Validated
-- Traceable to its source
-- Assigned a confidence score
+CandidateOne was developed as a solution inspired by the **Eightfold AI Candidate Canonicalization Engineering Challenge**, demonstrating practical software engineering, data engineering, and system design principles.
 
 ---
 
@@ -112,400 +58,41 @@ Every field in the final output is:
 
 ✅ Multi-source candidate ingestion
 
-✅ Resume PDF parser
+✅ Resume PDF extraction
 
-✅ ATS JSON parser
+✅ ATS JSON extraction
 
-✅ LinkedIn JSON parser
+✅ LinkedIn profile extraction
 
-✅ GitHub JSON parser
+✅ GitHub profile extraction
 
-✅ Recruiter CSV parser
+✅ Recruiter CSV ingestion
 
-✅ Modular ETL architecture
+✅ Canonical candidate schema
 
-✅ Configurable projection layer
+✅ Email, phone, skill and location normalization
 
-✅ Canonical JSON generation
+✅ Intelligent merge engine
 
-✅ Confidence scoring
+✅ Conflict resolution
 
 ✅ Provenance tracking
 
-✅ Schema validation
+✅ Confidence scoring
 
-✅ Downloadable output
+✅ Configurable projection layer
+
+✅ JSON Schema validation
+
+✅ Downloadable canonical & projected JSON
 
 ✅ Responsive Flask web application
 
 ---
 
-# 🏗️ System Architecture
-
-<p align="center">
-
-<img src="docs/Architecture.png" width="95%"/>
-
-</p>
-
-The system is composed of independent modules that communicate through a fixed canonical schema.
-
-This design allows new data sources to be integrated with minimal changes to the pipeline while preserving deterministic behavior.
-
----
-
-# 🔄 End-to-End Pipeline
-
-<p align="center">
-
-<img src="docs/Pipeline_Diagram.png" width="100%"/>
-
-</p>
-
-The pipeline performs:
-
-1. Extraction
-2. Normalization
-3. Merge
-4. Projection
-5. Validation
-
-before generating the final canonical candidate profile.
-
----
-
-# 📂 Repository Structure
-
-```text
-CandidateOne/
-
-├── app.py
-├── pipeline.py
-├── config/
-├── docs/
-├── extractors/
-├── merger/
-├── models/
-├── normalizer/
-├── projection/
-├── validator/
-├── utils/
-├── templates/
-├── static/
-├── tests/
-├── sample_input/
-├── output/
-└── README.md
-```
-# ⚙️ Technology Stack
-
-| Category | Technologies |
-|----------|--------------|
-| Language | Python 3.13 |
-| Backend | Flask |
-| Data Processing | Pandas |
-| PDF Parsing | PyPDF2 |
-| Validation | JSON Schema |
-| Phone Normalization | phonenumbers |
-| Email Validation | email-validator |
-| Country Standardization | pycountry |
-| Frontend | HTML5, CSS3, Bootstrap 5, JavaScript |
-| Architecture | Modular ETL Pipeline |
-
----
-
-# 🏛️ Software Architecture
-
-CandidateOne follows a layered ETL architecture where each component has a single responsibility.
-
-```text
-                    INPUT SOURCES
-
- Resume     ATS     LinkedIn     GitHub     Recruiter CSV
-    │         │         │            │             │
-    └─────────┴─────────┴────────────┴─────────────┘
-                          │
-                    Extraction Layer
-                          │
-                    Normalization Layer
-                          │
-                     Merge Engine
-                          │
-              Confidence & Provenance
-                          │
-                    Projection Layer
-                          │
-                    Schema Validator
-                          │
-                   Canonical JSON Output
-```
-
-Each layer is completely isolated, making the pipeline easy to extend, test and maintain.
-
----
-
-# 🧩 ETL Pipeline
-
-## ① Extraction Layer
-
-Supported Sources
-
-| Source | Type |
-|---------|------|
-| Resume | PDF |
-| ATS | JSON |
-| LinkedIn | JSON |
-| GitHub | JSON |
-| Recruiter Export | CSV |
-
-Each extractor converts its source into a common canonical structure before entering the pipeline.
-
-Example:
-
-```python
-Resume
-        │
-        ▼
-ResumeReader
-        │
-        ▼
-Canonical Candidate
-```
-
----
-
-## ② Normalization Layer
-
-Raw data from different systems often contains inconsistencies.
-
-Example
-
-Before
-
-```text
-Python3
-python
-Python Programming
-PYTHON
-```
-
-After
-
-```text
-Python
-```
-
-Normalization includes:
-
-- Email validation
-- Phone formatting (E.164)
-- Country normalization (ISO-3166)
-- Date normalization
-- Skill canonicalization
-- Location cleanup
-
----
-
-## ③ Merge Engine
-
-The Merge Engine combines all candidate sources into a single trusted profile.
-
-Instead of blindly overwriting fields, CandidateOne resolves conflicts intelligently.
-
-Merge Strategy
-
-```
-Resume
-      │
-ATS
-      │
-LinkedIn
-      │
-GitHub
-      │
-CSV
-      │
-      ▼
-
-Conflict Resolver
-
-      ▼
-
-Single Candidate Profile
-```
-
-Merge priorities are determined using configurable source reliability.
-
-Default order
-
-```
-Resume
-↓
-
-LinkedIn
-↓
-
-ATS
-↓
-
-GitHub
-↓
-
-Recruiter CSV
-```
-
----
-
-# 🎯 Conflict Resolution Strategy
-
-Different sources often disagree.
-
-Example
-
-Resume
-
-```
-Phone
-+91 90103xxxxx
-```
-
-LinkedIn
-
-```
-Phone
-Not Available
-```
-
-Final Decision
-
-```
-+91 90103xxxxx
-```
-
-Rules
-
-✔ Prefer non-empty values
-
-✔ Prefer trusted sources
-
-✔ Preserve provenance
-
-✔ Never invent information
-
-✔ Deterministic results
-
----
-
-# 📚 Canonical Schema
-
-Every extractor produces the same internal schema.
-
-```json
-{
-  "candidate_id": "",
-  "full_name": "",
-  "emails": [],
-  "phones": [],
-  "location": {},
-  "links": {},
-  "headline": "",
-  "years_experience": 0,
-  "skills": [],
-  "experience": [],
-  "education": [],
-  "provenance": {},
-  "overall_confidence": 0.0
-}
-```
-
-Because every module shares this schema, downstream components never need to know the original source format.
-
----
-
-# 🎯 Projection Layer
-
-The Projection Layer separates internal storage from external output.
-
-Instead of changing the canonical schema, users can reshape the output using configuration.
-
-Example configuration
-
-```json
-{
-  "fields":[
-    {
-      "path":"full_name",
-      "type":"string"
-    },
-    {
-      "path":"phones",
-      "normalize":"E164"
-    }
-  ]
-}
-```
-
-Possible operations
-
-- Include selected fields
-- Rename fields
-- Normalize output
-- Hide provenance
-- Hide confidence
-- Handle missing values
-
-This keeps the internal pipeline independent from downstream integrations.
-
----
-
-# ✅ Schema Validation
-
-Before returning any output, CandidateOne validates the generated profile.
-
-Validation checks
-
-- Required fields
-- Correct data types
-- Array structure
-- Object structure
-- Confidence score
-- Canonical schema compliance
-
-Only valid candidate profiles are returned.
-
----
-
-# 📈 Confidence Scoring
-
-Every candidate receives an overall confidence score.
-
-Confidence combines
-
-```
-Source Reliability
-        +
-Profile Completeness
-        +
-Validation Success
-```
-
-Default source weights
-
-| Source | Weight |
-|----------|--------|
-| Resume | 0.30 |
-| LinkedIn | 0.25 |
-| ATS | 0.20 |
-| GitHub | 0.15 |
-| Recruiter CSV | 0.10 |
-
-This score helps downstream systems determine profile reliability.
-
-# 🚀 Getting Started
+# ⚡ Running the Project
 
 ## Prerequisites
-
-Before running CandidateOne, ensure the following are installed.
 
 | Requirement | Version |
 |-------------|----------|
@@ -515,27 +102,25 @@ Before running CandidateOne, ensure the following are installed.
 
 ---
 
-# 📦 Installation
-
-Clone the repository
+## Clone the Repository
 
 ```bash
 git clone https://github.com/<your-username>/CandidateOne.git
 ```
 
-Move into the project
+Move into the project directory
 
 ```bash
 cd CandidateOne
 ```
 
-Create virtual environment
+---
+
+## Create a Virtual Environment
 
 ```bash
 python -m venv venv
 ```
-
-Activate virtual environment
 
 ### Windows
 
@@ -549,7 +134,9 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-Install dependencies
+---
+
+## Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -557,15 +144,15 @@ pip install -r requirements.txt
 
 ---
 
-# ▶ Running the Application
-
-Start the Flask application
+## Run the Application
 
 ```bash
 python app.py
 ```
 
-Open your browser
+---
+
+## Open in Browser
 
 ```
 http://127.0.0.1:5000
@@ -573,61 +160,13 @@ http://127.0.0.1:5000
 
 ---
 
-# 📁 Sample Input
+## Upload the Following Sample Files
 
-CandidateOne supports both structured and unstructured sources.
-
-| Source | Format |
-|---------|--------|
-| Resume | PDF |
-| ATS Export | JSON |
-| LinkedIn | JSON |
-| GitHub | JSON |
-| Recruiter Export | CSV |
-
-Example
-
-```
-sample_input/
-
-resume.pdf
-
-ats.json
-
-linkedin.json
-
-github.json
-
-recruiter.csv
-```
-
----
-
-# 🖥️ Application Demo
-
-### Home Page
-
-<p align="center">
-
-<img src="docs/HomePage.png" width="95%">
-
-</p>
-
----
-
-### Upload Sources
-
-Upload
-
-✅ Resume
-
-✅ ATS
-
-✅ LinkedIn
-
-✅ GitHub
-
-✅ Recruiter CSV
+- ✅ Resume (PDF)
+- ✅ ATS Export (JSON)
+- ✅ LinkedIn Profile (JSON)
+- ✅ GitHub Profile (JSON)
+- ✅ Recruiter CSV
 
 Click
 
@@ -635,190 +174,779 @@ Click
 Run CandidateOne Pipeline
 ```
 
+The application will generate:
+
+- Canonical Candidate Profile
+- Projected Candidate Profile
+- Confidence Score
+- Provenance Information
+- Downloadable JSON Files
+
+---
+# 🖥️ Application Demo
+
+CandidateOne provides a simple and intuitive web interface for processing candidate information from multiple sources.
+
+The workflow consists of uploading the available candidate documents, executing the ETL pipeline, and reviewing the generated canonical profile.
+
+---
+# 🎥 Project Demonstration
+
+Watch the complete CandidateOne workflow below.
+
+https://github.com/shankar-irla/CandidateOne/docs/CandidateOne.mp4
+
 ---
 
-### Generated Output
+## 🏠 Home Page
 
 <p align="center">
 
-<img src="docs/ResultPage.png" width="95%">
+<img src="docs/HomePage.png" width="95%" alt="CandidateOne Home Page"/>
 
 </p>
 
-The pipeline produces
+The home page allows users to upload multiple candidate data sources simultaneously.
 
-✔ Canonical Candidate Profile
+Supported inputs include:
 
-✔ Projected Candidate Profile
+- 📄 Resume (PDF)
+- 📋 ATS Export (JSON)
+- 💼 LinkedIn Profile (JSON)
+- 🐙 GitHub Profile (JSON)
+- 📊 Recruiter CSV
 
-✔ Confidence Score
-
-✔ Provenance Information
-
-✔ Downloadable JSON
+After selecting the available files, the user simply clicks **Run CandidateOne Pipeline** to begin processing.
 
 ---
 
-# 📤 Output
+## 📊 Result Dashboard
 
-Default output
+<p align="center">
+
+<img src="docs/ResultPage.png" width="95%" alt="CandidateOne Result Dashboard"/>
+
+</p>
+
+After processing, CandidateOne displays:
+
+- 📈 Pipeline statistics
+- 👤 Canonical Candidate Profile
+- 📋 Projected Candidate Profile
+- 🎯 Overall Confidence Score
+- 📝 Provenance Information
+- 📥 Downloadable JSON outputs
+
+The dashboard is designed to provide both technical transparency and recruiter-friendly readability.
+
+---
+
+# 🏗️ System Architecture
+
+<p align="center">
+
+<img src="docs/Architecture.png" width="95%" alt="System Architecture"/>
+
+</p>
+
+CandidateOne follows a **layered modular architecture**, where every component has a single well-defined responsibility.
+
+The architecture separates:
+
+- Data extraction
+- Data normalization
+- Candidate merging
+- Output projection
+- Schema validation
+
+Each module communicates through a fixed canonical schema, allowing the system to remain extensible without affecting downstream components.
+
+### Architectural Benefits
+
+- Modular design
+- Easy maintenance
+- High testability
+- Independent components
+- Reusable extractors
+- Extensible pipeline
+- Deterministic processing
+
+---
+
+# 🔄 End-to-End Pipeline
+
+<p align="center">
+
+<img src="docs/Pipeline_Diagram.png" width="100%" alt="Pipeline Diagram"/>
+
+</p>
+
+CandidateOne processes every candidate through the following stages:
+
+```text
+Resume (PDF)
+ATS Export (JSON)
+LinkedIn (JSON)
+GitHub (JSON)
+Recruiter CSV
+        │
+        ▼
+Extraction
+        │
+        ▼
+Normalization
+        │
+        ▼
+Merge Engine
+        │
+        ▼
+Confidence Calculation
+        │
+        ▼
+Projection Layer
+        │
+        ▼
+Schema Validation
+        │
+        ▼
+Canonical Candidate Profile
+```
+
+Each stage performs a dedicated responsibility while preserving provenance and ensuring deterministic outputs.
+
+---
+
+# 🎯 Problem Statement
+
+Modern recruitment platforms receive candidate information from multiple independent systems.
+
+A single candidate may exist simultaneously in:
+
+- Applicant Tracking Systems (ATS)
+- Resume databases
+- Professional networking platforms
+- Code hosting platforms
+- Recruiter spreadsheets
+
+Since these systems are maintained independently, they often contain conflicting or incomplete information.
+
+Common issues include:
+
+- Multiple spellings of the same name
+- Missing contact details
+- Duplicate candidate records
+- Inconsistent skill names
+- Partial employment history
+- Conflicting location information
+- Different profile completeness levels
+
+Without a canonical representation, these inconsistencies negatively impact:
+
+- Recruiter productivity
+- Candidate search accuracy
+- AI-based recommendation systems
+- Analytics and reporting
+- Data quality
+
+---
+
+# 💡 Solution
+
+CandidateOne addresses these challenges through a deterministic ETL pipeline.
+
+Instead of treating every source independently, the system:
+
+1. Extracts candidate information from multiple sources.
+2. Normalizes inconsistent data into standard formats.
+3. Resolves conflicts using configurable source priorities.
+4. Merges all information into a unified canonical profile.
+5. Calculates an overall confidence score.
+6. Tracks provenance for every extracted field.
+7. Validates the final profile using JSON Schema.
+8. Generates configurable output representations.
+
+This approach ensures that every downstream system consumes consistent, validated, explainable, and trustworthy candidate data.
+
+---
+
+# ✅ Assignment Requirements Coverage
+
+The project has been developed to address the major objectives of the Candidate Canonicalization Engineering Challenge.
+
+| Requirement | Status |
+|-------------|:------:|
+| Resume PDF Parsing | ✅ |
+| ATS JSON Parsing | ✅ |
+| LinkedIn JSON Parsing | ✅ |
+| GitHub JSON Parsing | ✅ |
+| Recruiter CSV Parsing | ✅ |
+| Canonical Candidate Schema | ✅ |
+| Data Normalization | ✅ |
+| Candidate Merge Engine | ✅ |
+| Conflict Resolution | ✅ |
+| Confidence Scoring | ✅ |
+| Provenance Tracking | ✅ |
+| Configurable Projection | ✅ |
+| JSON Schema Validation | ✅ |
+| Downloadable Output | ✅ |
+| Responsive Flask UI | ✅ |
+
+The implementation emphasizes modularity, maintainability, deterministic processing, and extensibility while remaining faithful to the engineering objectives of the assignment.
+
+---
+# 📂 Repository Structure
+
+CandidateOne follows a modular, layered architecture where each component has a single responsibility. This organization improves readability, maintainability, extensibility, and testing while enabling seamless integration of new candidate data sources.
+
+```text
+CandidateOne/
+
+├── app.py
+├── pipeline.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+│
+├── config/
+│
+├── docs/
+│   ├── Architecture.png
+│   ├── Demo_Guide.md
+│   ├── Pipeline_Diagram.png
+│   └── Technical_Design.pdf
+│
+├── extractors/
+│   ├── __init__.py
+│   ├── ats_reader.py
+│   ├── base_reader.py
+│   ├── csv_reader.py
+│   ├── github_reader.py
+│   ├── linkedin_reader.py
+│   ├── parser.py
+│   └── resume_reader.py
+│
+├── logs/
+│   └── candidateone.log
+│
+├── merger/
+│   ├── confidence.py
+│   ├── conflict_resolver.py
+│   ├── merge_engine.py
+│   └── provenance.py
+│
+├── models/
+│   ├── candidate.py
+│   └── canonical_schema.py
+│
+├── normalizer/
+│   ├── dates.py
+│   ├── email.py
+│   ├── location.py
+│   ├── phone.py
+│   ├── skills.py
+│   └── text.py
+│
+├── output/
+│
+├── projection/
+│   ├── config_loader.py
+│   └── output_mapper.py
+│
+├── sample_input/
+│
+├── static/
+│   ├── css/
+│   ├── images/
+│   │   └── architecture.png
+│   └── js/
+│
+├── templates/
+│
+├── tests/
+│   ├── sample_data/
+│   ├── __init__.py
+│   ├── test_extractors.py
+│   ├── test_merge.py
+│   ├── test_normalizers.py
+│   ├── test_projection.py
+│   └── test_validation.py
+│
+├── utils/
+│   ├── constants.py
+│   ├── exceptions.py
+│   ├── helpers.py
+│   └── logger.py
+│
+└── validator/
+    ├── config_validator.py
+    └── schema_validator.py
+```
+
+---
+
+# ⚙️ Technology Stack
+
+CandidateOne combines modern Python libraries with a modular ETL architecture to build a scalable and deterministic candidate canonicalization engine.
+
+| Category | Technology |
+|----------|------------|
+| Programming Language | Python 3.13 |
+| Backend Framework | Flask |
+| Frontend | HTML5, CSS3, Bootstrap 5, JavaScript |
+| Data Processing | Pandas |
+| PDF Parsing | PyPDF2 |
+| Email Validation | email-validator |
+| Phone Formatting | phonenumbers |
+| Country Standardization | pycountry |
+| Schema Validation | JSON Schema |
+| Logging | Python Logging |
+| Testing | Pytest |
+| Architecture | Modular ETL Pipeline |
+
+---
+
+# 🏛️ Software Architecture
+
+CandidateOne follows a layered ETL architecture in which every module performs a dedicated responsibility. Each layer communicates using a common canonical schema, ensuring loose coupling and high maintainability.
+
+```text
+                    INPUT SOURCES
+
+ Resume      ATS      LinkedIn      GitHub      Recruiter CSV
+    │          │          │             │              │
+    └──────────┴──────────┴─────────────┴──────────────┘
+                           │
+                    Extraction Layer
+                           │
+                    Normalization Layer
+                           │
+                      Merge Engine
+                           │
+             Confidence & Provenance
+                           │
+                    Projection Layer
+                           │
+                    Schema Validator
+                           │
+                 Canonical Candidate Profile
+```
+
+This layered approach ensures deterministic processing while making the system easy to extend with additional input sources or output formats.
+
+---
+
+# 🧩 Module Responsibilities
+
+## 📥 Extraction Layer
+
+Responsible for reading heterogeneous candidate information from multiple source formats.
+
+Implemented Readers
+
+- Resume Reader (PDF)
+- ATS Reader (JSON)
+- LinkedIn Reader (JSON)
+- GitHub Reader (JSON)
+- Recruiter CSV Reader
+
+Each reader transforms its respective source into the internal canonical schema before entering the ETL pipeline.
+
+---
+
+## 🔄 Normalization Layer
+
+Standardizes inconsistent information collected from different sources.
+
+Normalization includes:
+
+- Email validation
+- Phone number formatting (E.164)
+- Skill normalization
+- Date normalization
+- Country standardization
+- Location cleanup
+- General text normalization
+
+---
+
+## 🤝 Merge Layer
+
+Combines multiple candidate profiles into a single trusted representation.
+
+Responsibilities include:
+
+- Conflict resolution
+- Source prioritization
+- Duplicate removal
+- Provenance tracking
+- Confidence calculation
+
+---
+
+## 🎯 Projection Layer
+
+Projects the internal canonical schema into configurable output formats suitable for downstream systems.
+
+Capabilities include:
+
+- Field selection
+- Field renaming
+- Custom output schemas
+- Optional provenance
+- Optional confidence score
+
+---
+
+## ✅ Validation Layer
+
+Validates the generated candidate profile before it is returned.
+
+Validation checks include:
+
+- Required fields
+- Data types
+- Nested object validation
+- Array validation
+- Canonical schema compliance
+- Output configuration validation
+
+---
+
+# 🔁 End-to-End Data Flow
+
+```text
+Resume
+ATS
+LinkedIn
+GitHub
+Recruiter CSV
+        │
+        ▼
+Extraction
+        │
+        ▼
+Canonical Candidate Objects
+        │
+        ▼
+Normalization
+        │
+        ▼
+Merge Engine
+        │
+        ▼
+Confidence & Provenance
+        │
+        ▼
+Projection Layer
+        │
+        ▼
+Schema Validation
+        │
+        ▼
+Canonical Candidate Profile
+```
+
+The deterministic workflow ensures that every candidate is processed consistently regardless of the number or combination of available input sources.
+
+---
+# 📚 Canonical Candidate Schema
+
+Every extractor converts its source into a common internal representation known as the **Canonical Candidate Schema**.
+
+Using a fixed schema ensures that all downstream components remain independent of the original input format.
 
 ```json
 {
-  "candidate_id":"1001",
-  "full_name":"Irla Ganga Siva Shankar",
-  "emails":[
-      "238r1a6786@gmail.com"
-  ],
-  "phones":[
-      "+919010376352"
-  ],
-  "skills":[
-      "Python",
-      "Flask",
-      "Machine Learning"
+  "candidate_id": "1001",
+  "full_name": "John Doe",
+  "emails": [],
+  "phones": [],
+  "location": {
+    "city": "",
+    "region": "",
+    "country": ""
+  },
+  "links": {
+    "linkedin": "",
+    "github": "",
+    "portfolio": ""
+  },
+  "headline": "",
+  "years_experience": 0,
+  "skills": [],
+  "experience": [],
+  "education": [],
+  "provenance": {},
+  "overall_confidence": 0.0
+}
+```
+
+The canonical schema serves as the single source of truth throughout the pipeline.
+
+---
+
+# 🎯 Projection Layer
+
+CandidateOne separates **internal representation** from **external output** through a configurable projection layer.
+
+Instead of modifying the canonical schema, users can customize the generated output using configuration files.
+
+Example:
+
+```json
+{
+  "fields": [
+    {
+      "path": "full_name",
+      "rename": "candidate_name"
+    },
+    {
+      "path": "emails[0]",
+      "rename": "primary_email"
+    }
   ]
 }
 ```
 
-Projected output
+Supported capabilities include:
+
+- Include selected fields
+- Rename output fields
+- Hide provenance information
+- Hide confidence scores
+- Apply output formatting
+- Generate custom JSON structures
+
+This makes CandidateOne adaptable to different downstream systems without changing the ETL pipeline.
+
+---
+
+# ✅ Schema Validation
+
+Before any candidate profile is returned, CandidateOne validates the generated output against the canonical JSON schema.
+
+Validation includes:
+
+- Required field verification
+- Data type validation
+- Nested object validation
+- Array validation
+- Configuration validation
+- Confidence score validation
+- Canonical schema compliance
+
+Only valid candidate profiles are exported.
+
+---
+
+# 📈 Confidence Scoring
+
+Every generated candidate profile receives an overall confidence score.
+
+The score combines:
+
+```text
+Source Reliability
+        +
+Profile Completeness
+        +
+Successful Validation
+```
+
+### Default Source Reliability
+
+| Source | Weight |
+|----------|--------|
+| Resume | 0.30 |
+| LinkedIn | 0.25 |
+| ATS | 0.20 |
+| GitHub | 0.15 |
+| Recruiter CSV | 0.10 |
+
+The confidence score provides downstream systems with an indication of the overall reliability and completeness of the generated profile.
+
+---
+
+# 📁 Sample Input
+
+CandidateOne supports the following input sources:
+
+| Source | Format |
+|---------|--------|
+| Resume | PDF |
+| ATS Export | JSON |
+| LinkedIn Profile | JSON |
+| GitHub Profile | JSON |
+| Recruiter CSV | CSV |
+
+Example directory:
+
+```text
+sample_input/
+
+├── resume.pdf
+├── ats.json
+├── linkedin.json
+├── github.json
+└── recruiter.csv
+```
+
+---
+
+# 📤 Generated Output
+
+CandidateOne generates two JSON files:
+
+- **Canonical Candidate Profile**
+- **Projected Candidate Profile**
+
+Example:
 
 ```json
 {
-  "candidate_name":"Irla Ganga Siva Shankar",
-  "primary_email":"238r1a6786@gmail.com",
-  "phone":"+919010376352"
+  "candidate_id": "1001",
+  "full_name": "Irla Ganga Siva Shankar",
+  "emails": [
+    "example@email.com"
+  ],
+  "phones": [
+    "+919876543210"
+  ],
+  "skills": [
+    "Python",
+    "Flask",
+    "Machine Learning"
+  ]
 }
 ```
+
+The generated files are stored inside the `output/` directory and can also be downloaded directly from the web application.
 
 ---
 
 # 🧪 Testing
 
-Run all tests
+CandidateOne includes automated tests for major pipeline components.
+
+Run all tests:
 
 ```bash
 pytest
 ```
 
-Run specific tests
+Run a specific test module:
 
 ```bash
-pytest tests/
+pytest tests/test_merge.py
 ```
+
+Covered modules include:
+
+- Extractors
+- Normalizers
+- Merge Engine
+- Projection Layer
+- Validation Layer
 
 ---
 
 # ⚡ Performance
 
-Current implementation
+Current implementation supports:
 
-| Metric | Value |
-|---------|--------|
-| Sources Supported | 5 |
-| Extractors | 5 |
-| Normalizers | 5 |
-| Merge Engine | ✓ |
-| Projection Layer | ✓ |
-| Validation | ✓ |
-| Confidence Engine | ✓ |
-| Provenance Tracking | ✓ |
+| Component | Status |
+|-----------|--------|
+| Resume Parsing | ✅ |
+| ATS Parsing | ✅ |
+| LinkedIn Parsing | ✅ |
+| GitHub Parsing | ✅ |
+| Recruiter CSV Parsing | ✅ |
+| Merge Engine | ✅ |
+| Projection Layer | ✅ |
+| Schema Validation | ✅ |
+| Confidence Scoring | ✅ |
+| Provenance Tracking | ✅ |
 
-Designed for deterministic processing of thousands of candidate records.
-
----
-
-# 🛡 Edge Cases Handled
-
-CandidateOne gracefully handles
-
-✅ Missing email
-
-✅ Missing phone
-
-✅ Empty skills
-
-✅ Duplicate skills
-
-✅ Duplicate candidate sources
-
-✅ Invalid dates
-
-✅ Invalid phone numbers
-
-✅ Invalid emails
-
-✅ Missing education
-
-✅ Missing experience
-
-✅ Empty recruiter rows
-
-✅ Unknown JSON fields
-
-✅ Null values
-
-✅ Partial candidate profiles
-
-Instead of crashing, the pipeline validates and safely returns a consistent canonical profile whenever possible.
+The architecture is designed to process large batches of candidate profiles efficiently while maintaining deterministic results.
 
 ---
 
-# 🎯 Why This Design?
+# 🛡️ Edge Cases Handled
 
-The architecture follows a modular ETL pattern.
+CandidateOne safely handles numerous real-world scenarios, including:
 
-Advantages
+- Missing email addresses
+- Missing phone numbers
+- Duplicate candidate sources
+- Duplicate skills
+- Invalid email formats
+- Invalid phone numbers
+- Missing education records
+- Missing work experience
+- Partial candidate profiles
+- Unknown JSON fields
+- Empty recruiter rows
+- Null values
+- Incomplete location information
 
-- Independent extractors
-- Pluggable data sources
-- Configurable output schema
-- Deterministic merge logic
-- Explainable confidence calculation
-- Clear provenance tracking
-- Easy maintenance
-- Easy testing
-- Scalable architecture
-
-Every component has a single responsibility, making the system extensible without affecting the rest of the pipeline.
+Whenever possible, the pipeline produces a valid canonical profile instead of failing.
 
 ---
 
-# 📈 Future Improvements
+# 🎯 Design Principles
 
-Planned enhancements
+CandidateOne was built following core software engineering principles:
+
+- Modular architecture
+- Single Responsibility Principle (SRP)
+- Separation of concerns
+- Configurable output generation
+- Deterministic processing
+- Explainable merge logic
+- Extensible ETL pipeline
+- Reusable components
+- Maintainable codebase
+
+These principles make the project easy to extend with new data sources and output formats.
+
+---
+
+# 🚀 Future Enhancements
+
+Potential improvements include:
 
 - OCR support for scanned resumes
 - DOCX resume extraction
-- Multi-language resume parsing
 - AI-powered skill extraction
-- LLM-assisted conflict resolution
-- REST API
+- Large Language Model (LLM) integration
+- Candidate similarity search
+- Candidate ranking engine
+- REST API support
 - Docker deployment
-- Kubernetes support
+- Kubernetes orchestration
 - PostgreSQL persistence
 - Elasticsearch indexing
 - Real-time pipeline monitoring
+- Cloud deployment (AWS / Azure / GCP)
 
 ---
 
-# 🙋Introducing Myself
+# 👨‍💻 About the Developer
 
 ## I G Siva Shankar
 
-Computer Science Engineering (Data Science)
+**B.Tech – Computer Science & Engineering (Data Science)**
 
-CMR Engineering College
+CMR Engineering College, Hyderabad
 
-Hyderabad, India
-
-Interested in
+### Areas of Interest
 
 - Artificial Intelligence
 - Machine Learning
 - Data Engineering
 - Backend Development
 - System Design
+- Agentic AI
 
 ---
 
@@ -827,33 +955,43 @@ Interested in
 <p align="center">
 
 <a href="https://github.com/shankar_irla">
-
-<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github">
-
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github"/>
 </a>
 
 <a href="https://linkedin.com/in/shankar_irla">
-
-<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin">
-
+<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin"/>
 </a>
 
 <a href="mailto:238r1a6786@gmail.com">
-
-<img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail">
-
+<img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail"/>
 </a>
 
 </p>
 
 ---
 
+# 📄 License
+
+This project is licensed under the **MIT License**.
+
+See the `LICENSE` file for details.
+
+---
+
+# Acknowledgements
+
+This project was developed as part of the **Eightfold AI Candidate Canonicalization Engineering Challenge** to demonstrate practical software engineering, data engineering, and ETL pipeline design principles.
+
+---
+
 <div align="center">
 
-# ⭐ If you found this project interesting, consider giving it a star!
+# ⭐ Thank You!
 
-### Built with ❤️ by I G Siva Shankar
+### CandidateOne
 
-**CandidateOne — End-to-End Multi-Source Candidate Canonicalization Engine**
+**End-to-End Multi-Source Candidate Canonicalization Engine**
+
+Built with ❤️ by **I G Siva Shankar**
 
 </div>
