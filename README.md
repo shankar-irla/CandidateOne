@@ -105,7 +105,7 @@ CandidateOne was developed as a solution inspired by the **Eightfold AI Candidat
 ## Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/CandidateOne.git
+git clone https://github.com/shankar-irla/CandidateOne.git
 ```
 
 Move into the project directory
